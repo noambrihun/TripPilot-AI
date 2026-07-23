@@ -15,6 +15,18 @@ export const createTrip = async (req: Request, res: Response) => {
     }
 };
 
+export const generateTrip = async (req: Request, res: Response) => {
+    try{
+        const {destination, budget, startDate, endDate, interests, notes} = req.body;
+        return res.status(200).json({ message: "Trip generated successfully" });
+    }catch (error){
+        if (error instanceof mongoose.Error.ValidationError) {
+            return res.status(400).json({ message: "Invalid trip data", errors: error.errors });
+        }
+        res.status(500).json({ message: "Failed to generate trip", error: error});
+    }
+}
+
 export const getTrips = async (req: Request, res: Response) => {
     try{
         const trips = await Trip.find();
