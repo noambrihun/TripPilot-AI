@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import  Trip  from "../models/Trip";
+import mongoose from "mongoose";
 
 export const createTrip = async (req: Request, res: Response) => {
     try{ 
@@ -7,7 +8,10 @@ export const createTrip = async (req: Request, res: Response) => {
         res.status(201).json(trip);
 
     } catch (error) {
-        res.status(500).json({ message: "Failed to create trip" });
+        if (error instanceof mongoose.Error.ValidationError) {
+            return res.status(400).json({ message: "Invalid trip data", errors: error.errors });
+        }
+        res.status(500).json({ message: "Failed to create trip", error: error });
     }
 };
 

@@ -14,16 +14,20 @@ export interface ITrip extends Document {
       type: String,
       required: true,
       trim: true,
+      minlength: 2,
     },
   
     budget: {
       type: Number,
       required: true,
+      min: 1,
     },
   
     travelers: {
       type: Number,
       required: true,
+      min: 1,
+      max: 20,
     },
     startDate: {
       type: Date,
