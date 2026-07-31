@@ -9,7 +9,8 @@ export interface ITrip extends Document {
     interests: string[];
     notes?: string;
     generatedPlan: string;
-  }const tripSchema = new mongoose.Schema({
+  }
+  const tripSchema = new mongoose.Schema({
     destination: {
       type: String,
       required: true,
