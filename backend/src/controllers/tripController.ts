@@ -18,8 +18,8 @@ export const createTrip = async (req: Request, res: Response) => {
 
 export const generateTrip = async (req: Request, res: Response) => {
     try{
-        const {destination, budget, startDate, endDate, interests, notes} = req.body;
-        const result = await generateTripPlan({destination, budget, startDate, endDate, interests, notes});
+        const {destination, budget, startDate, endDate,travelers, interests, notes} = req.body;
+        const result = await generateTripPlan({destination, budget, startDate, endDate, travelers, interests, notes});
         res.status(200).json(result);
     }catch (error){
         console.error("Failed to generate trip", error);

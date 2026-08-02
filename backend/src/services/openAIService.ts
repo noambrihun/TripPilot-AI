@@ -8,6 +8,7 @@ interface TripPlanData {
     budget: number;
     startDate: Date;
     endDate: Date;
+    travelers: number;
     interests: string[];
     notes: string;
 }
@@ -19,6 +20,7 @@ export const generateTripPlan = async (tripData: TripPlanData) => {
     Create a detailed day-by-day travel itinerary based on the information above. Include the following details:
    Destination: ${tripData.destination}
    Budget: ${tripData.budget}
+   Travelers: ${tripData.travelers}
    Start Date: ${tripData.startDate}
    End Date: ${tripData.endDate}
    Interests: ${tripData.interests.join(", ")}
