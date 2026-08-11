@@ -1,4 +1,36 @@
+import { useState } from "react";
 function GenerateTrips() {
+  const[tripPlan, setTripPlan] = useState("");
+  const [formData, setFormData] = useState({
+    destination: "",
+    startDate: "",
+    endDate: "",
+    budget: "",
+    travelers: "",
+    interests: "",
+    notes: "",
+  })
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const tripData = {
+      ...formData,
+      budget: Number(formData.budget),
+      travelers: Number(formData.travelers),
+      interests: formData.interests.split(",").map((item) => item.trim()),
+    }
+    console.log(tripData);
+
+    const response = await fetch("http://localhost:5000/api/trips/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(tripData),
+    })
+  const data = await response.json();
+  setTripPlan(data.generatedPlan);
+  };
     return (
     <main className="min-h-screen bg-gray-50 px-4 py-10">
     <div className="mx-auto max-w-3xl">
@@ -12,13 +44,15 @@ function GenerateTrips() {
    </p>
    </div>
   
-  <form className="rounded-xl bg-white p-6 shadow-md">
+  <form onSubmit={handleSubmit} className="rounded-xl bg-white p-6 shadow-md">
     <div>
         <label htmlFor="destination" className="block mb-2 font-medium">
             Destination
         </label>
         <input
         id="destination"
+        value={formData.destination}
+        onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
         type="text"
         placeholder="e.g. Berlin, Germany"
         className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
@@ -32,6 +66,8 @@ function GenerateTrips() {
 
     <input
       id="startDate"
+      value={formData.startDate}
+      onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
       type="date"
       className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
     />
@@ -44,6 +80,8 @@ function GenerateTrips() {
 
     <input
       id="endDate"
+      value={formData.endDate}
+      onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
       type="date"
       className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
     />
@@ -56,6 +94,8 @@ function GenerateTrips() {
         </label>
         <input
         id="budget"
+        value={formData.budget}
+        onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
         type="number"
         placeholder="e.g. 1000"
         className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
@@ -68,6 +108,8 @@ function GenerateTrips() {
         </label>
         <input  
         id="travelers"
+        value={formData.travelers}
+        onChange={(e) => setFormData({ ...formData, travelers: e.target.value })}
         type="number"
         placeholder="e.g. 1, 2, 3"
         className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
@@ -81,6 +123,8 @@ function GenerateTrips() {
     </label>
     <input
     id="interests"
+    value={formData.interests}
+    onChange={(e) => setFormData({ ...formData, interests: e.target.value })}
     type="text"
     placeholder="e.g. History, Culture, Food"
     className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
@@ -89,11 +133,13 @@ function GenerateTrips() {
 </div>
 <div>
     <label htmlFor="notes" className="mb-2 block font-medium">
-        Additional Notes
+        Add Notes
     </label>
     <textarea
     id="notes"
     placeholder="e.g. I have a food allergy, I'm a vegetarian"
+    value={formData.notes}
+    onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
     className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
     rows={4}
     />
@@ -103,8 +149,19 @@ function GenerateTrips() {
 </button>
 
           </form>
+          {tripPlan && (
+          <div className="mt-8 rounded-xl bg-white p-6 shadow-md">
+            <h2 className="mb-4 text-2xl font-bold">Your Trip Plan</h2>
+            <p className="whitespace-pre-wrap">
+              {tripPlan}
+            </p>
+          </div>
+        )}
         </div>
+       
       </main>
+      
+    
     )
 }
 

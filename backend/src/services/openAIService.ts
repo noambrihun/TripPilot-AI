@@ -23,7 +23,7 @@ export const generateTripPlan = async (tripData: TripPlanData) => {
    Travelers: ${tripData.travelers}
    Start Date: ${tripData.startDate}
    End Date: ${tripData.endDate}
-   Interests: ${tripData.interests.join(", ")}
+   Interests: ${tripData.interests.join(",")}
    Notes: ${tripData.notes}
    `
    const response = await client.responses.create({
