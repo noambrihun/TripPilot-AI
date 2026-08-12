@@ -1,6 +1,10 @@
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 function GenerateTrips() {
   const[tripPlan, setTripPlan] = useState("");
+  const[loading, setLoading] = useState(false);
+  const[error, setError] = useState("");
   const [formData, setFormData] = useState({
     destination: "",
     startDate: "",
@@ -13,6 +17,8 @@ function GenerateTrips() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
     const tripData = {
       ...formData,
       budget: Number(formData.budget),
@@ -21,6 +27,7 @@ function GenerateTrips() {
     }
     console.log(tripData);
 
+    try{
     const response = await fetch("http://localhost:5000/api/trips/generate", {
       method: "POST",
       headers: {
@@ -28,9 +35,18 @@ function GenerateTrips() {
       },
       body: JSON.stringify(tripData),
     })
+    if (!response.ok) {
+      throw new Error("Failed to generate trip plan. Please try again.");
+    }
   const data = await response.json();
   setTripPlan(data.generatedPlan);
-  };
+  } catch (error) {
+    console.error(error);
+    setError("Failed to generate trip plan. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
     return (
     <main className="min-h-screen bg-gray-50 px-4 py-10">
     <div className="mx-auto max-w-3xl">
@@ -144,17 +160,22 @@ function GenerateTrips() {
     rows={4}
     />
 </div>
-<button type="submit" className="w-full mt-5 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors">
-    Generate Plan
+<button type="submit" disabled={loading} className="w-full mt-5 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors">
+    {loading ? "Generating..." : "Generate Plan"}
 </button>
 
           </form>
+          {error && (
+            <div className="mt-4 p-4 rounded-lg bg-red-50 text-red-700 border border-red-200">
+              {error}
+            </div>
+          )}
           {tripPlan && (
           <div className="mt-8 rounded-xl bg-white p-6 shadow-md">
             <h2 className="mb-4 text-2xl font-bold">Your Trip Plan</h2>
-            <p className="whitespace-pre-wrap">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {tripPlan}
-            </p>
+            </ReactMarkdown>
           </div>
         )}
         </div>
