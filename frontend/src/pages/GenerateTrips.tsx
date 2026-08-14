@@ -47,6 +47,32 @@ function GenerateTrips() {
     setLoading(false);
   }
 };
+
+const handleSaveTrip = async () => {
+    const saveTripData = {
+      ...formData,
+      budget: Number(formData.budget),
+      travelers: Number(formData.travelers),
+      interests: formData.interests.split(",").map((item) => item.trim()),
+      notes: formData.notes,
+      generatedPlan: tripPlan,
+    }
+  try{
+  const response = await fetch("http://localhost:5000/api/trips",{
+    method: "POST",
+    headers:{"Content-Type": "application/json"},
+    body: JSON.stringify(saveTripData),
+  })
+  if (!response.ok) {
+  throw new Error("Failed to save trip plan. Please try again.");
+}
+const data = await response.json();
+console.log(data);
+} catch(error){
+  console.error(error);
+}
+}
+
     return (
     <main className="min-h-screen bg-gray-50 px-4 py-10">
     <div className="mx-auto max-w-3xl">
@@ -176,6 +202,9 @@ function GenerateTrips() {
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {tripPlan}
             </ReactMarkdown>
+            <button onClick={handleSaveTrip} type="button" className="mt-6 w-full rounded-lg bg-green-600 px-4 py-2 font-medium text-white hover:bg-green-700">
+          Save Plan
+        </button>
           </div>
         )}
         </div>
