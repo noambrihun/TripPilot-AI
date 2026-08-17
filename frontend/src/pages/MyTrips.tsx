@@ -1,7 +1,10 @@
 import type { Trip } from "../types/trips";
 import { useState, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 function MyTrips() {
     const [trips, setTrips] = useState<Trip[]>([]);
+    const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null);
 
     useEffect(() => {
         const fetchTrips = async () => {
@@ -24,11 +27,25 @@ function MyTrips() {
                     <p>Budget: {trip.budget}</p>
                     <p>Travelers: {trip.travelers}</p>
                     <p>Interests: {trip.interests.join(", ")}</p>
+                    <button type="button" onClick={() => setSelectedTrip(trip)}>
+                        view plan
+                    </button>
                     <p>startDate: {new Date(trip.startDate).toLocaleDateString()}</p>
                     <p>endDate: {new Date(trip.endDate).toLocaleDateString()}</p>
                 </div>
              ))}
              </div>
+             {selectedTrip && (
+        <div className="mt-8 rounded-xl bg-white p-6 shadow-md">
+        <h2 className="mb-4 text-2xl font-bold">
+        {selectedTrip.destination} - Trip Plan
+         </h2>
+
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        {selectedTrip.generatedPlan}
+        </ReactMarkdown>
+        </div>
+        )}
         </div>
     )
 }
