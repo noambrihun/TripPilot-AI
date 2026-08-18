@@ -17,6 +17,21 @@ function MyTrips() {
         fetchTrips();
 
     }, []);
+
+    const handleDeleteTrip = async (id : string) => {
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this trip?"
+        )
+        if(!confirmed) return;
+        const response = await fetch(`http://localhost:5000/api/trips/${id}`, {
+            method: "DELETE",
+        })
+        if (response.ok) {
+            setTrips(trips.filter((trip) => trip._id !== id));
+        } else {
+            console.error("Failed to delete trip");
+        }
+    }
     return (
         <div className="p-4 bg-gray-100">
             <h1 className="text-3xl font-bold underline">My Trips</h1>
@@ -27,11 +42,12 @@ function MyTrips() {
                     <p>Budget: {trip.budget}</p>
                     <p>Travelers: {trip.travelers}</p>
                     <p>Interests: {trip.interests.join(", ")}</p>
-                    <button type="button" onClick={() => setSelectedTrip(trip)}>
+                    <button className="rounded-lg bg-blue-500 text-white px-4 py-2" type="button" onClick={() => setSelectedTrip(trip)}>
                         view plan
                     </button>
                     <p>startDate: {new Date(trip.startDate).toLocaleDateString()}</p>
                     <p>endDate: {new Date(trip.endDate).toLocaleDateString()}</p>
+                    <button type="button" className="rounded-lg bg-red-500 text-white px-4 py-2" onClick={() => handleDeleteTrip(trip._id)}>Delete</button>
                 </div>
              ))}
              </div>
