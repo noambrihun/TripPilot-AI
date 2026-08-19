@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 function MyTrips() {
     const [trips, setTrips] = useState<Trip[]>([]);
     const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null);
+    const [editingTrip, setEditingTrip] = useState<Trip | null>(null);
 
     useEffect(() => {
         const fetchTrips = async () => {
@@ -32,6 +33,22 @@ function MyTrips() {
             console.error("Failed to delete trip");
         }
     }
+    const handleSaveEdit = async () => {
+        const response = await fetch(`http://localhost:5000/api/trips/${editingTrip._id}`,{
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(editingTrip),
+        })
+        if(!response.ok){
+            throw new Error("Failed to update trip");
+        }
+        const updatedTrip = await response.json();
+        setTrips(trips.map((trip) => trip._id === editingTrip._id ? updatedTrip : trip));
+        setEditingTrip(null);
+        }
+    
     return (
         <div className="p-4 bg-gray-100">
             <h1 className="text-3xl font-bold underline">My Trips</h1>
@@ -45,6 +62,7 @@ function MyTrips() {
                     <button className="rounded-lg bg-blue-500 text-white px-4 py-2" type="button" onClick={() => setSelectedTrip(trip)}>
                         view plan
                     </button>
+                    <button type="button" className="rounded-lg bg-yellow-500 text-white px-4 py-2" onClick={() => setEditingTrip(trip)}>Edit</button>
                     <p>startDate: {new Date(trip.startDate).toLocaleDateString()}</p>
                     <p>endDate: {new Date(trip.endDate).toLocaleDateString()}</p>
                     <button type="button" className="rounded-lg bg-red-500 text-white px-4 py-2" onClick={() => handleDeleteTrip(trip._id)}>Delete</button>
@@ -61,6 +79,37 @@ function MyTrips() {
         {selectedTrip.generatedPlan}
         </ReactMarkdown>
         </div>
+        )}
+        {editingTrip && (
+            <div>
+                <h2>Edit Trip</h2>
+                <input
+                type="text"
+                value={editingTrip.destination}
+                onChange={(e) => setEditingTrip({...editingTrip, destination: e.target.value})}
+                 />
+                 <input
+                 type="number"
+                 value={editingTrip.budget}
+                 onChange={(e) => setEditingTrip({...editingTrip, budget: Number(e.target.value)})}
+                 />
+                 <input
+                 type="number"
+                 value={editingTrip.travelers}
+                 onChange={(e) => setEditingTrip({...editingTrip, travelers: Number(e.target.value)})}
+                 />
+                 <input
+                 type="text"
+                 value={editingTrip.interests.join(",")}
+                 onChange={(e) => setEditingTrip({...editingTrip, interests: e.target.value.split(",").map((item) => item.trim())})}
+                 />
+                 <input 
+                 type="text"
+                 value={editingTrip.notes}
+                 onChange={(e) => setEditingTrip({...editingTrip, notes: e.target.value})}
+                 />
+                 <button type="button" className="rounded-lg bg-green-500 text-white px-4 py-2" onClick={handleSaveEdit}>Save</button>
+            </div>
         )}
         </div>
     )
