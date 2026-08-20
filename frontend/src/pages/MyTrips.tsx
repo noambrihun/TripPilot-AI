@@ -70,7 +70,13 @@ function MyTrips() {
              ))}
              </div>
              {selectedTrip && (
-        <div className="mt-8 rounded-xl bg-white p-6 shadow-md">
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4">
+            <div className="bg-white rounded-xl shadow-xl max-w-3xl w-full max-h-[80vh] overflow-y-auto p-6 relative">
+                <button type="button"
+                className="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center top-4 right-4 hover:bg-red-600 absolute"
+                 onClick={() => setSelectedTrip(null)}>
+                    X
+                </button>
         <h2 className="mb-4 text-2xl font-bold">
         {selectedTrip.destination} - Trip Plan
          </h2>
@@ -78,6 +84,7 @@ function MyTrips() {
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {selectedTrip.generatedPlan}
         </ReactMarkdown>
+        </div>
         </div>
         )}
         {editingTrip && (
