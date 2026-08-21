@@ -2,6 +2,7 @@ import type { Trip } from "../types/trips";
 import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { Link } from "react-router-dom";
 function MyTrips() {
     const [trips, setTrips] = useState<Trip[]>([]);
     const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null);
@@ -66,6 +67,7 @@ function MyTrips() {
                     <p>startDate: {new Date(trip.startDate).toLocaleDateString()}</p>
                     <p>endDate: {new Date(trip.endDate).toLocaleDateString()}</p>
                     <button type="button" className="rounded-lg bg-red-500 text-white px-4 py-2" onClick={() => handleDeleteTrip(trip._id)}>Delete</button>
+                    <Link to={`/trips/${trip._id}`} className="rounded-lg bg-orange-500 text-white px-4 py-2">View Trip</Link>
                 </div>
              ))}
              </div>

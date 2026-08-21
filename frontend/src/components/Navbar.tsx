@@ -7,6 +7,7 @@ function Navbar(){
                 <Link to="/" className="bg-gray-700 text-white text-lg px-2 py-4 rounded-lg hover:text-white">Home</Link>
                 <Link to="/my-trips" className= " bg-gray-700 text-white text-lg px-2 py-4 rounded-lg hover:text-white">My Trips</Link>
                 <Link to="/generate-trips" className=" bg-blue-600 text-white text-lg px-2 py-4 rounded-lg hover:text-white">Generate Trips</Link>
+                <Link to="/trips/:id" className="bg-black text-white text-lg px-2 py-4 rounded-lg hover:text-white">Trip Details</Link>
             </div>
         </nav>
     )
