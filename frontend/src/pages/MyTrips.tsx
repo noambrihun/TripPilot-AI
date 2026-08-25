@@ -3,29 +3,59 @@ import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Link } from "react-router-dom";
+import.meta.env.VITE_API_URL;
 function MyTrips() {
     const [trips, setTrips] = useState<Trip[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null);
     const [editingTrip, setEditingTrip] = useState<Trip | null>(null);
 
-    useEffect(() => {
+    
         const fetchTrips = async () => {
-            const response = await fetch("http://localhost:5000/api/trips");
+            setLoading(true);
+            setError(null);
+            try{
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/trips`);
+            if(!response.ok){
+                throw new Error('Failed to fetch trips');
+            }
             const data = await response.json();
             console.log(data);
             setTrips(data);
-
+        }catch(error){
+            console.error('Error fetching trips:', error);
+            setError('Failed to fetch trips');
+        }finally{
+            setLoading(false);
         }
-        fetchTrips();
-
-    }, []);
-
+        }
+        useEffect(() => {
+            fetchTrips();
+        }, []);
+        if (loading) {
+            return <p>Loading trips...</p>;
+          }
+          if (error) {
+            return (
+              <div className="max-w-xl mx-auto mt-10 p-6 bg-red-50 border border-red-200 rounded-xl text-center">
+                <h2 className="text-xl font-bold text-red-600 mb-2">
+                  Something went wrong
+                </h2>
+                <p className="text-red-500">
+                  {error}
+                </p>
+              </div>
+            )
+          }
+          
+            
     const handleDeleteTrip = async (id : string) => {
         const confirmed = window.confirm(
             "Are you sure you want to delete this trip?"
         )
         if(!confirmed) return;
-        const response = await fetch(`http://localhost:5000/api/trips/${id}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/trips/${id}`, {
             method: "DELETE",
         })
         if (response.ok) {
@@ -35,7 +65,7 @@ function MyTrips() {
         }
     }
     const handleSaveEdit = async () => {
-        const response = await fetch(`http://localhost:5000/api/trips/${editingTrip._id}`,{
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/trips/${editingTrip._id}`,{
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -54,6 +84,13 @@ function MyTrips() {
         <div className="p-4 bg-gray-100">
             <h1 className="text-3xl font-bold underline">My Trips</h1>
             <div className="grid grid-4 gap-4 p-4">
+            {trips.length === 0 && (
+            <div className="text-center mt-10">
+                <p className="text-gray-500 text-lg">
+                   No saved trips yet.
+                </p>
+               </div>
+             )}
              {trips.map((trip) => (
                 <div key={trip._id} className="bg-white p-4 rounded-lg shadow-md">
                     <h2>{trip.destination}</h2>

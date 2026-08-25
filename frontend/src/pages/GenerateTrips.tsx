@@ -1,10 +1,14 @@
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { useNavigate } from "react-router-dom";
+import.meta.env.VITE_API_URL;
 function GenerateTrips() {
   const[tripPlan, setTripPlan] = useState("");
   const[loading, setLoading] = useState(false);
   const[error, setError] = useState("");
+  const[success, setSuccess] = useState("");
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     destination: "",
     startDate: "",
@@ -28,7 +32,7 @@ function GenerateTrips() {
     console.log(tripData);
 
     try{
-    const response = await fetch("http://localhost:5000/api/trips/generate", {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/trips/generate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,6 +53,8 @@ function GenerateTrips() {
 };
 
 const handleSaveTrip = async () => {
+  setLoading(true);
+    setError("");
     const saveTripData = {
       ...formData,
       budget: Number(formData.budget),
@@ -58,7 +64,7 @@ const handleSaveTrip = async () => {
       generatedPlan: tripPlan,
     }
   try{
-  const response = await fetch("http://localhost:5000/api/trips",{
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/trips`,{
     method: "POST",
     headers:{"Content-Type": "application/json"},
     body: JSON.stringify(saveTripData),
@@ -68,8 +74,13 @@ const handleSaveTrip = async () => {
 }
 const data = await response.json();
 console.log(data);
+navigate("/my-trips"); 
+setSuccess("Trip plan saved successfully.");
 } catch(error){
   console.error(error);
+  setError("Failed to save trip plan. Please try again.");
+} finally {
+  setLoading(false);
 }
 }
 
@@ -203,8 +214,13 @@ console.log(data);
               {tripPlan}
             </ReactMarkdown>
             <button onClick={handleSaveTrip} type="button" className="mt-6 w-full rounded-lg bg-green-600 px-4 py-2 font-medium text-white hover:bg-green-700">
-          Save Plan
+          {loading ? "Saving..." : "Save Plan"}
         </button>
+        {success && (
+        <div className="mb-4 rounded-lg bg-green-50 border border-green-200 p-3 text-green-700">
+         {success}
+       </div>
+)}
           </div>
         )}
         </div>
