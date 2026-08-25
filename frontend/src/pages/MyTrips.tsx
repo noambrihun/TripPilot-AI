@@ -65,6 +65,7 @@ function MyTrips() {
         }
     }
     const handleSaveEdit = async () => {
+        if(!editingTrip) return;
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/trips/${editingTrip._id}`,{
             method: "PUT",
             headers: {
