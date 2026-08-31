@@ -85,19 +85,22 @@ setSuccess("Trip plan saved successfully.");
 }
 
     return (
-    <main className="min-h-screen bg-gray-50 px-4 py-10">
-    <div className="mx-auto max-w-3xl">
+    <main className="min-h-screen bg-slate-50 px-6 py-14">
+    <div className="mx-auto max-w-4xl">
     <div className="mb-8 text-center">
-    <h1 className="text-3xl font-bold">
+      <p className="mb-2 text-sm font-semibold text-blue-600">
+          AI TRIP PLANNER
+      </p>
+    <h1 className="text-4xl font-bold text-slate-900">
           Plan Your Trip with AI
    </h1>
   
-   <p className="mt-2 text-gray-600">
+   <p className="mt-3 text-base text-slate-600">
    Tell us about your trip and we'll create a personalized plan for you.
    </p>
    </div>
   
-  <form onSubmit={handleSubmit} className="rounded-xl bg-white p-6 shadow-md">
+  <form onSubmit={handleSubmit} className="rounded-2xl bg-white p-8 shadow-lg border border-slate-200">
     <div>
         <label htmlFor="destination" className="block mb-2 font-medium">
             Destination
@@ -108,7 +111,7 @@ setSuccess("Trip plan saved successfully.");
         onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
         type="text"
         placeholder="e.g. Berlin, Germany"
-        className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+        className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
         />
     </div>
   <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -122,7 +125,7 @@ setSuccess("Trip plan saved successfully.");
       value={formData.startDate}
       onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
       type="date"
-      className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+      className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
     />
   </div>
 
@@ -136,7 +139,7 @@ setSuccess("Trip plan saved successfully.");
       value={formData.endDate}
       onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
       type="date"
-      className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+      className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
     />
   </div>
 </div>
@@ -151,7 +154,7 @@ setSuccess("Trip plan saved successfully.");
         onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
         type="number"
         placeholder="e.g. 1000"
-        className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+        className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
         />
     </div>
     <div>
@@ -165,7 +168,7 @@ setSuccess("Trip plan saved successfully.");
         onChange={(e) => setFormData({ ...formData, travelers: e.target.value })}
         type="number"
         placeholder="e.g. 1, 2, 3"
-        className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+        className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
         />
     </div>
 
@@ -180,7 +183,7 @@ setSuccess("Trip plan saved successfully.");
     onChange={(e) => setFormData({ ...formData, interests: e.target.value })}
     type="text"
     placeholder="e.g. History, Culture, Food"
-    className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+    className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
     />
 
 </div>
@@ -193,11 +196,11 @@ setSuccess("Trip plan saved successfully.");
     placeholder="e.g. I have a food allergy, I'm a vegetarian"
     value={formData.notes}
     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-    className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+    className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
     rows={4}
     />
 </div>
-<button type="submit" disabled={loading} className="w-full mt-5 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors">
+<button type="submit" disabled={loading} className="w-full mt-5 py-3 rounded-xl bg-blue-600 text-white font-semibold shadow-sm hover:bg-blue-700 hover:shadow-md transition disabled:opacity-60 disabled:cursor-not-allowed">
     {loading ? "Generating..." : "Generate Plan"}
 </button>
 
@@ -208,11 +211,13 @@ setSuccess("Trip plan saved successfully.");
             </div>
           )}
           {tripPlan && (
-          <div className="mt-8 rounded-xl bg-white p-6 shadow-md">
-            <h2 className="mb-4 text-2xl font-bold">Your Trip Plan</h2>
+          <div className="mt-8 rounded-2xl bg-white p-8 shadow-lg border border-slate-200">
+            <h2 className="mb-6 text-3xl font-bold text-slate-900">Your Trip Plan</h2>
+            <div className="prose prose-slate max-w-none">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {tripPlan}
             </ReactMarkdown>
+            </div>
             <button onClick={handleSaveTrip} type="button" className="mt-6 w-full rounded-lg bg-green-600 px-4 py-2 font-medium text-white hover:bg-green-700">
           {loading ? "Saving..." : "Save Plan"}
         </button>
