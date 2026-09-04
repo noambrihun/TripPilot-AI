@@ -8,4 +8,5 @@ export interface Trip {
     interests: string[];
     notes: string;
     generatedPlan: string;
+    imagesUrls?: string[];
 }

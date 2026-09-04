@@ -107,7 +107,14 @@ function MyTrips() {
                 )}
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
              {trips.map((trip) => (
-                <div key={trip._id} className="bg-white rounded-xl border border-slate-500 p-5 min-h-[70px] flex flex-col">
+                <div key={trip._id} className="bg-white rounded-xl border border-slate-500 p-5 min-h-/[70px]/ flex flex-col">
+                  {trip.imagesUrls?.[0] && (
+                  <img
+                  src={trip.imagesUrls[0]}
+                   alt={trip.destination}
+                   className="w-full max-h-80 object-cover rounded-lg mb-4"
+                   />
+                  )}
                     <h2 className="mb-3 text-2xl font-bold text-slate-900">{trip.destination}</h2>
                     <div className="mb-4 flex gap-6 text-slate-600">
                    <p>
