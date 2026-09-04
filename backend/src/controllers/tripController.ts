@@ -1,13 +1,15 @@
 import { Request, Response } from "express";
 import  Trip  from "../models/Trip";
 import { generateTripPlan } from "../services/openAIService";
+import { getDestinationImages } from "../services/imageService";
 import mongoose from "mongoose";
 
 export const createTrip = async (req: Request, res: Response) => {
     try{ 
-        const trip = await new Trip(req.body).save();
+        const imagesurls = await getDestinationImages(req.body.destination);
+        const trip = await new Trip({...req.body, imagesUrls: imagesurls}).save();
         res.status(201).json(trip);
-
+        
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
             return res.status(400).json({ message: "Invalid trip data", errors: error.errors });

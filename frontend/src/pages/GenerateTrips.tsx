@@ -214,9 +214,36 @@ setSuccess("Trip plan saved successfully.");
           <div className="mt-8 rounded-2xl bg-white p-8 shadow-lg border border-slate-200">
             <h2 className="mb-6 text-3xl font-bold text-slate-900">Your Trip Plan</h2>
             <div className="prose prose-slate max-w-none">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {tripPlan}
-            </ReactMarkdown>
+            <ReactMarkdown
+  remarkPlugins={[remarkGfm]}
+  components={{
+    h2: ({ children }) => (
+      <h2 className="mt-8 mb-4 text-2xl font-bold text-slate-900">
+        {children}
+      </h2>
+    ),
+
+    h3: ({ children }) => (
+      <h3 className="mt-6 mb-3 text-xl font-semibold text-slate-800">
+        {children}
+      </h3>
+    ),
+
+    p: ({ children }) => (
+      <p className="mb-4 leading-relaxed text-slate-700">
+        {children}
+      </p>
+    ),
+
+    strong: ({ children }) => (
+      <strong className="font-semibold text-slate-900">
+        {children}
+      </strong>
+    ),
+  }}
+>
+  {tripPlan}
+</ReactMarkdown>
             </div>
             <button onClick={handleSaveTrip} type="button" className="mt-6 w-full rounded-lg bg-green-600 px-4 py-2 font-medium text-white hover:bg-green-700">
           {loading ? "Saving..." : "Save Plan"}

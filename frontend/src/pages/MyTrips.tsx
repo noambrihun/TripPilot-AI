@@ -82,32 +82,87 @@ function MyTrips() {
         }
     
     return (
-        <div className="p-4 bg-gray-100">
-            <h1 className="text-3xl font-bold underline">My Trips</h1>
-            <div className="grid grid-4 gap-4 p-4">
+        <main className="min-h-screen bg-slate-50 px-6 py-14">
+        <div className="mx-auto max-w-6xl">
+      
+          <div className="mb-10">
+            <p className="mb-2 text-sm font-semibold text-blue-600">
+              YOUR JOURNEYS
+            </p>
+      
+            <h1 className="text-4xl font-bold text-slate-900">
+              My Trips
+            </h1>
+      
+            <p className="mt-3 text-slate-600">
+              View and manage all your saved travel plans.
+            </p>
+          </div>
+      
+          <div className="col-span-full text-center py-12">
             {trips.length === 0 && (
-            <div className="text-center mt-10">
                 <p className="text-gray-500 text-lg">
                    No saved trips yet.
                 </p>
-               </div>
-             )}
+                )}
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
              {trips.map((trip) => (
-                <div key={trip._id} className="bg-white p-4 rounded-lg shadow-md">
-                    <h2>{trip.destination}</h2>
-                    <p>Budget: {trip.budget}</p>
-                    <p>Travelers: {trip.travelers}</p>
-                    <p>Interests: {trip.interests.join(", ")}</p>
-                    <button className="rounded-lg bg-blue-500 text-white px-4 py-2" type="button" onClick={() => setSelectedTrip(trip)}>
-                        view plan
-                    </button>
-                    <button type="button" className="rounded-lg bg-yellow-500 text-white px-4 py-2" onClick={() => setEditingTrip(trip)}>Edit</button>
-                    <p>startDate: {new Date(trip.startDate).toLocaleDateString()}</p>
-                    <p>endDate: {new Date(trip.endDate).toLocaleDateString()}</p>
-                    <button type="button" className="rounded-lg bg-red-500 text-white px-4 py-2" onClick={() => handleDeleteTrip(trip._id)}>Delete</button>
-                    <Link to={`/trips/${trip._id}`} className="rounded-lg bg-orange-500 text-white px-4 py-2">View Trip</Link>
+                <div key={trip._id} className="bg-white rounded-xl border border-slate-500 p-5 min-h-[70px] flex flex-col">
+                    <h2 className="mb-3 text-2xl font-bold text-slate-900">{trip.destination}</h2>
+                    <div className="mb-4 flex gap-6 text-slate-600">
+                   <p>
+                    <span className="font-semibold text-slate-900">Budget:</span>{" "}
+                          {trip.budget}
+                  </p>
+
+                  <p>
+                   <span className="font-semibold text-slate-900">Travelers:</span>{" "}
+                         {trip.travelers}
+                 </p>
+                </div>
+                <p className="mb-4 text-slate-600">
+                    <span className="font-semibold text-slate-900">Interests:</span>{" "}
+                    {trip.interests.join(", ")}
+                </p>
+                <div className="mb-5 text-sm text-slate-500">
+                    <p>
+                        {new Date(trip.startDate).toLocaleDateString()}
+                        {" → "}
+                        {new Date(trip.endDate).toLocaleDateString()}
+                    </p>
+                    <div className="mt-5 flex flex-wrap gap-3">
+                   <button
+                   type="button"
+                  className="rounded-lg bg-blue-500 text-white px-4 py-2"
+                 onClick={() => setSelectedTrip(trip)} >
+                       View Plan
+                 </button>
+
+                  <button
+                   type="button"
+                   className="rounded-lg bg-yellow-500 text-white px-4 py-2"
+                   onClick={() => setEditingTrip(trip)} >
+                       Edit
+                  </button>
+
+                  <button
+                  type="button"
+                  className="rounded-lg bg-red-500 text-white px-4 py-2"
+                 onClick={() => handleDeleteTrip(trip._id)} >
+                   Delete
+                 </button>
+
+                  <Link
+                   to={`/trips/${trip._id}`}
+                    className="rounded-lg bg-orange-500 text-white px-4 py-2" >
+                     View Trip
+                  </Link>
+                   </div>
+                </div>
                 </div>
              ))}
+             </div>
+             </div>
              </div>
              {selectedTrip && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4">
@@ -158,7 +213,7 @@ function MyTrips() {
                  <button type="button" className="rounded-lg bg-green-500 text-white px-4 py-2" onClick={handleSaveEdit}>Save</button>
             </div>
         )}
-        </div>
+        </main>
     )
 }
 

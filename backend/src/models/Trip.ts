@@ -9,6 +9,7 @@ export interface ITrip extends Document {
     interests: string[];
     notes?: string;
     generatedPlan: string;
+    imagesUrls?: string[];
   }
   const tripSchema = new mongoose.Schema({
     destination: {
@@ -49,7 +50,10 @@ export interface ITrip extends Document {
       type: String,
       required: true,
     },
-  
+    imagesUrls: {
+      type: [String],
+      default: [],
+    },
   });
 
   const Trip = mongoose.model<ITrip>("Trip", tripSchema);
