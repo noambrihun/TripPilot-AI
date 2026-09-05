@@ -49,6 +49,49 @@ function TripDetails() {
               </div>
             );
           }
+          if (!trip) {
+            return <p>Trip not found</p>;
+          }
+          const sections = trip.generatedPlan.split(/(?=## Day \d+)/);
+          console.log(sections);
+          const [intro, ...days] = sections;
+          const markdownComponents = {
+            
+    h2: ({ children }) => (
+      <h2 className="mt-8 mb-4 text-2xl font-bold text-slate-900">
+        {children}
+      </h2>
+    ),
+
+    h3: ({ children }) => (
+      <h3 className="mt-6 mb-3 text-xl font-semibold text-slate-800">
+        {children}
+      </h3>
+    ),
+
+    p: ({ children }) => (
+      <p className="mb-4 leading-relaxed text-slate-700">
+        {children}
+      </p>
+    ),
+    strong: ({ children }) => (
+        <strong className="font-semibold text-slate-900">
+          {children}
+        </strong>
+      ),
+      
+      ul: ({ children }) => (
+        <ul className="mb-4 ml-6 list-disc space-y-2 text-slate-700">
+          {children}
+        </ul>
+      ),
+      
+      li: ({ children }) => (
+        <li className="leading-relaxed">
+          {children}
+        </li>
+      )
+          };
     return (
         <>
             <main>
@@ -137,46 +180,22 @@ function TripDetails() {
     <div className="bg-white rounded-2xl shadow-md p-8">
     <ReactMarkdown
   remarkPlugins={[remarkGfm]}
-  components={{
-    h2: ({ children }) => (
-      <h2 className="mt-8 mb-4 text-2xl font-bold text-slate-900">
-        {children}
-      </h2>
-    ),
-
-    h3: ({ children }) => (
-      <h3 className="mt-6 mb-3 text-xl font-semibold text-slate-800">
-        {children}
-      </h3>
-    ),
-
-    p: ({ children }) => (
-      <p className="mb-4 leading-relaxed text-slate-700">
-        {children}
-      </p>
-    ),
-    strong: ({ children }) => (
-        <strong className="font-semibold text-slate-900">
-          {children}
-        </strong>
-      ),
-      
-      ul: ({ children }) => (
-        <ul className="mb-4 ml-6 list-disc space-y-2 text-slate-700">
-          {children}
-        </ul>
-      ),
-      
-      li: ({ children }) => (
-        <li className="leading-relaxed">
-          {children}
-        </li>
-      ),
-  }}
->
-  {trip.generatedPlan}
+  components={markdownComponents}>
+  {intro}
 </ReactMarkdown>
      </div>
+     <div className="space-y-6 mt-6">
+  {days.map((day, index) => (
+    <div
+      key={index}
+      className="bg-white rounded-2xl shadow-md p-8"
+    >
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        {day}
+      </ReactMarkdown>
+    </div>
+  ))}
+</div>
      </div>
      </section>
      </main>
