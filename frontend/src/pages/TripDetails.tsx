@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState }  from 'react';
 import type { Trip } from '../types/trips';
+import { currencySymbol } from '../types/trips';
 import remarkGfm from 'remark-gfm';
 import ReactMarkdown from 'react-markdown';
 function TripDetails() {
@@ -56,12 +57,21 @@ function TripDetails() {
           console.log(sections);
           const [intro, ...days] = sections;
           const markdownComponents = {
+            h2: ({ children }) => {
+              const isDay = String(children).startsWith("Day");
             
-    h2: ({ children }) => (
-      <h2 className="mt-8 mb-4 text-2xl font-bold text-slate-900">
-        {children}
-      </h2>
-    ),
+              return (
+                <h2
+                  className={
+                    isDay
+                      ? "mb-6 rounded-xl border border-blue-100 bg-linear-to-r from-blue-50 to-sky-50 px-5 py-3.5 text-2xl font-bold tracking-tight text-slate-900 shadow-sm shadow-blue-100/60"
+                      : "mt-8 mb-4 text-2xl font-bold text-slate-900"
+                  }
+                >
+                  {children}
+                </h2>
+              );
+            },
 
     h3: ({ children }) => (
       <h3 className="mt-6 mb-3 text-xl font-semibold text-slate-800">
@@ -121,7 +131,7 @@ function TripDetails() {
     <div>
         <p className="text-sm text-slate-500">Budget</p>
         <p className="text-lg font-semibold text-slate-900">
-          {trip.budget}
+          {currencySymbol[trip.currency ?? "USD"]}{trip.budget}
         </p>
     </div>
 
@@ -188,9 +198,12 @@ function TripDetails() {
   {days.map((day, index) => (
     <div
       key={index}
-      className="bg-white rounded-2xl shadow-md p-8"
+      className="rounded-2xl border border-slate-200/80 bg-white p-8 shadow-md shadow-slate-200/50 ring-1 ring-slate-900/5"
     >
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+      <ReactMarkdown 
+      remarkPlugins={[remarkGfm]}
+      components={markdownComponents}
+      >
         {day}
       </ReactMarkdown>
     </div>

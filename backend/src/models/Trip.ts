@@ -5,6 +5,7 @@ export interface ITrip extends Document {
     startDate: Date;
     endDate: Date;
     budget: number;
+    currency: "USD" | "ILS" | "EUR";
     travelers: number;
     interests: string[];
     notes?: string;
@@ -23,6 +24,12 @@ export interface ITrip extends Document {
       type: Number,
       required: true,
       min: 1,
+    },
+
+    currency: {
+      type: String,
+      enum: ["USD", "ILS", "EUR"],
+      default: "USD",
     },
   
     travelers: {

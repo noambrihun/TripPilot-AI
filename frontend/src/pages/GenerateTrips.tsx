@@ -14,6 +14,7 @@ function GenerateTrips() {
     startDate: "",
     endDate: "",
     budget: "",
+    currency: "USD",
     travelers: "",
     interests: "",
     notes: "",
@@ -143,19 +144,32 @@ setSuccess("Trip plan saved successfully.");
     />
   </div>
 </div>
-<div className="mt-5 grid gris-cols-1 gap-4 md:grid-cols-2">
+<div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
     <div>
         <label htmlFor="budget" className="mb-2 block font-medium">
             Budget
         </label>
+        <div className="flex gap-2">
+        <select
+        id="currency"
+        value={formData.currency}
+        onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
+        className="rounded-xl border border-slate-300 bg-slate-50 px-3 py-3 text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+        >
+          <option value="USD">$ USD</option>
+          <option value="ILS">₪ ILS</option>
+          <option value="EUR">€ EUR</option>
+        </select>
         <input
         id="budget"
         value={formData.budget}
         onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
         type="number"
+        min="1"
         placeholder="e.g. 1000"
         className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
         />
+        </div>
     </div>
     <div>
         <label htmlFor="travelers" className="mb-2 block font-medium">

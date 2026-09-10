@@ -6,6 +6,7 @@ const client = new OpenAI({
 interface TripPlanData {
     destination: string;
     budget: number;
+    currency?: "USD" | "ILS" | "EUR";
     startDate: Date;
     endDate: Date;
     travelers: number;
@@ -14,12 +15,13 @@ interface TripPlanData {
 }
 export const generateTripPlan = async (tripData: TripPlanData) => {
    console.log("Trip data received by service:", tripData);
+   const currency = tripData.currency || "USD";
 
    const prompt = ` You are a travel planner assistant.
     You are given the following trip data:
     Create a detailed day-by-day travel itinerary based on the information above. Include the following details:
    Destination: ${tripData.destination}
-   Budget: ${tripData.budget}
+   Budget: ${tripData.budget} ${currency}
    Travelers: ${tripData.travelers}
    Start Date: ${tripData.startDate}
    End Date: ${tripData.endDate}

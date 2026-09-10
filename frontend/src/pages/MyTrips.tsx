@@ -1,4 +1,5 @@
 import type { Trip } from "../types/trips";
+import { currencySymbol } from "../types/trips";
 import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -107,19 +108,21 @@ function MyTrips() {
                 )}
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
              {trips.map((trip) => (
-                <div key={trip._id} className="bg-white rounded-xl border border-slate-500 p-5 min-h-/[70px]/ flex flex-col">
+                <div key={trip._id} 
+                 className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lg flex flex-col"
+>
                   {trip.imagesUrls?.[0] && (
                   <img
                   src={trip.imagesUrls[0]}
                    alt={trip.destination}
-                   className="w-full max-h-80 object-cover rounded-lg mb-4"
+                   className="w-full h-56 object-cover rounded-xl mb-5"
                    />
                   )}
-                    <h2 className="mb-3 text-2xl font-bold text-slate-900">{trip.destination}</h2>
+                    <h2 className="mb-4 text-2xl font-bold tracking-tight text-slate-900">{trip.destination}</h2>
                     <div className="mb-4 flex gap-6 text-slate-600">
                    <p>
                     <span className="font-semibold text-slate-900">Budget:</span>{" "}
-                          {trip.budget}
+                          {currencySymbol[trip.currency ?? "USD"]}{trip.budget}
                   </p>
 
                   <p>
