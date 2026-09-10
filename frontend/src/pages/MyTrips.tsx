@@ -143,29 +143,30 @@ function MyTrips() {
                     <div className="mt-5 flex flex-wrap gap-3">
                    <button
                    type="button"
-                  className="rounded-lg bg-blue-500 text-white px-4 py-2"
+                  className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-700 transition hover:bg-slate-50"
                  onClick={() => setSelectedTrip(trip)} >
                        View Plan
                  </button>
 
                   <button
                    type="button"
-                   className="rounded-lg bg-yellow-500 text-white px-4 py-2"
+                   className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-700 transition hover:bg-slate-50"
                    onClick={() => setEditingTrip(trip)} >
                        Edit
                   </button>
 
                   <button
                   type="button"
-                  className="rounded-lg bg-red-500 text-white px-4 py-2"
+                  className="rounded-lg bg-red-500 px-4 py-2 text-white transition hover:bg-red-600"
                  onClick={() => handleDeleteTrip(trip._id)} >
                    Delete
                  </button>
 
                   <Link
                    to={`/trips/${trip._id}`}
-                    className="rounded-lg bg-orange-500 text-white px-4 py-2" >
-                     View Trip
+                   className="rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
+                   >
+                    View Trip
                   </Link>
                    </div>
                 </div>
@@ -193,34 +194,96 @@ function MyTrips() {
         </div>
         )}
         {editingTrip && (
-            <div>
-                <h2>Edit Trip</h2>
+              <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                <h2 className="mb-6 text-2xl font-bold text-slate-900">
+                Edit Trip Plan
+              </h2>
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                <div>
+                  <label htmlFor="destination" className="block text-sm font-medium text-slate-700 mb-2">Destination</label>
                 <input
+                className="w-full rounded-lg border border-slate-300 px-3 py-2"
                 type="text"
                 value={editingTrip.destination}
                 onChange={(e) => setEditingTrip({...editingTrip, destination: e.target.value})}
                  />
+                 </div>
+                 <div>
+                 <label
+                  htmlFor="budget"
+                  className="mb-2 block text-sm font-medium text-slate-700"
+                  >
+                     Budget
+                  </label>
+
                  <input
-                 type="number"
+                  id="budget"
+                  type="number"
                  value={editingTrip.budget}
-                 onChange={(e) => setEditingTrip({...editingTrip, budget: Number(e.target.value)})}
+                 onChange={(e) =>
+                 setEditingTrip({...editingTrip,budget: Number(e.target.value), })}
+                 className="w-full rounded-lg border border-slate-300 px-3 py-2"
                  />
+                 </div>
+                 <div>
+                 <label
+                 htmlFor="travelers"
+                 className="mb-2 block text-sm font-medium text-slate-700"
+                 >
+                    Travelers
+                </label>
+
+               <input
+               id="travelers"
+               type="number"
+                value={editingTrip.travelers}
+                onChange={(e) => setEditingTrip({...editingTrip, travelers: Number(e.target.value)})}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2"
+                />
+                </div>
+                <div>
+                 <label
+                   htmlFor="interests"
+                   className="mb-2 block text-sm font-medium text-slate-700"
+                 >
+                   Interests
+                 </label>
+               
                  <input
-                 type="number"
-                 value={editingTrip.travelers}
-                 onChange={(e) => setEditingTrip({...editingTrip, travelers: Number(e.target.value)})}
+                   id="interests"
+                   type="text"
+                   value={editingTrip.interests.join(",")}
+                   onChange={(e) =>
+                     setEditingTrip({
+                       ...editingTrip,
+                       interests: e.target.value.split(",").map((item) => item.trim()),
+                     })
+                   }
+                   className="w-full rounded-lg border border-slate-300 px-3 py-2"
                  />
-                 <input
-                 type="text"
-                 value={editingTrip.interests.join(",")}
-                 onChange={(e) => setEditingTrip({...editingTrip, interests: e.target.value.split(",").map((item) => item.trim())})}
-                 />
-                 <input 
-                 type="text"
-                 value={editingTrip.notes}
-                 onChange={(e) => setEditingTrip({...editingTrip, notes: e.target.value})}
-                 />
-                 <button type="button" className="rounded-lg bg-green-500 text-white px-4 py-2" onClick={handleSaveEdit}>Save</button>
+               </div>
+               <div className="lg:col-span-2">
+               <label
+                htmlFor="notes"
+                className="mb-2 block text-sm font-medium text-slate-700"
+                >
+                    Notes
+                </label>
+                <textarea
+                id="notes"
+                value={editingTrip.notes}
+                onChange={(e) => setEditingTrip({...editingTrip, notes: e.target.value})}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2"
+                ></textarea>
+               </div>
+            </div>
+
+            <div className="mt-6 flex justify-end">
+           <button type="button"     className="rounded-lg bg-green-500 px-6 py-2 text-white transition hover:bg-green-600"
+            onClick={handleSaveEdit}>
+              Save Changes
+              </button>
+          </div>
             </div>
         )}
         </main>
