@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 
 export const createTrip = async (req: Request, res: Response) => {
     try{ 
-        const imagesurls = await getDestinationImages(req.body.destination,req.body.generatedPlan);
+        const imagesurls = await getDestinationImages(req.body.destination,req.body.interests);
         const trip = await new Trip({...req.body, imagesUrls: imagesurls}).save();
         res.status(201).json(trip);
         
