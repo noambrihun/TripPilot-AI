@@ -27,6 +27,10 @@ export const generateTripPlan = async (tripData: TripPlanData) => {
    End Date: ${tripData.endDate}
    Interests: ${tripData.interests.join(",")}
    Notes: ${tripData.notes}
+
+   Format the response in Markdown.
+   For each day, include a heading and organize the plan into Morning, Afternoon, and Evening.
+   Keep the itinerary practical and aligned with the user's budget, interests, dates, and number of travelers.
    `
    const response = await client.responses.create({
     model:"gpt-5.6-luna",
