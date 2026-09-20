@@ -3,7 +3,8 @@ import { useEffect, useState }  from 'react';
 import type { Trip } from '../types/trips';
 import { currencySymbol } from '../types/trips';
 import remarkGfm from 'remark-gfm';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown  from 'react-markdown';
+import type { Components } from 'react-markdown';
 function TripDetails() {
     const [trip, setTrip] = useState<Trip | null>(null);
     const { id } = useParams();
@@ -56,7 +57,7 @@ function TripDetails() {
           const sections = trip.generatedPlan.split(/(?=## Day \d+)/);
           console.log(sections);
           const [intro, ...days] = sections;
-          const markdownComponents = {
+          const markdownComponents: Components = {
             h2: ({ children }) => {
               const isDay = String(children).startsWith("Day");
             
