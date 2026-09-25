@@ -6,18 +6,18 @@ function Home() {
         <>
     <main>
     <section 
-     className="relative min-h-[70vh] flex items-center justify-center px-6 bg-cover bg-center" 
+     className="relative min-h-[calc(100svh-7rem)] md:min-h-[70vh] flex items-center justify-center px-6 py-14 md:py-0 bg-cover bg-center" 
      style={{backgroundImage: `url(${heroCoast})`}}
     >
     <div className="absolute inset-0 bg-black/45"></div>
       <div className="relative z-10 max-w-3xl text-center">
-        <p className="text-blue-300 font-semibold mb-4">AI-Powered Travel Planning</p>
+        <p className="text-blue-300 font-semibold mb-3 md:mb-4 text-sm md:text-base">AI-Powered Travel Planning</p>
 
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-white leading-tight">
           Plan your perfect trip with AI
         </h1>
 
-        <p className="text-base md:text-lg text-gray-200 mb-8">
+        <p className="text-base md:text-lg text-gray-200 mb-6 md:mb-8">
           Create personalized travel plans based on your
           destination, budget and interests.
         </p>
