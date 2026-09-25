@@ -60,33 +60,33 @@ function Home() {
       </h2>
     </div>
 
-    <div className="grid grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8">
 
-      <div className="bg-white p-8 rounded-xl shadow-md">
-        <span className="text-4-xl font-bold text-blue-600">
+      <div className="bg-white p-6 md:p-8 rounded-xl shadow-md">
+        <span className="text-4xl font-bold text-blue-600">
             01
         </span>
-        <h3 className="text-xl font-bold mt-5 mb-3">Tell us about your trip</h3>
+        <h3 className="text-xl font-bold mt-4 md:mt-5 mb-3">Tell us about your trip</h3>
         <p className="text-gray-600 leading-relaxed">
           Choose your destination, dates, budget and interests.
         </p>
       </div>
 
-      <div className="bg-white p-8 rounded-xl shadow-md">
-        <span className="text-4-xl font-bold text-blue-600">
+      <div className="bg-white p-6 md:p-8 rounded-xl shadow-md">
+        <span className="text-4xl font-bold text-blue-600">
             02
             </span>
-        <h3 className="text-xl font-bold mt-5 mb-3">AI builds your plan</h3>
+        <h3 className="text-xl font-bold mt-4 md:mt-5 mb-3">AI builds your plan</h3>
         <p className="text-gray-600 leading-relaxed">
           TripPilot AI creates a personalized itinerary for your trip.
         </p>
       </div>
 
-      <div className="bg-white p-8 rounded-xl shadow-md">
-        <span className="text-4-xl font-bold text-blue-600">
+      <div className="bg-white p-6 md:p-8 rounded-xl shadow-md">
+        <span className="text-4xl font-bold text-blue-600">
             03
         </span>
-        <h3 className="text-xl font-bold mt-5 mb-3">Save your adventure</h3>
+        <h3 className="text-xl font-bold mt-4 md:mt-5 mb-3">Save your adventure</h3>
         <p className="text-gray-600 leading-relaxed">
           Save your plan and manage your trips whenever you need.
         </p>
