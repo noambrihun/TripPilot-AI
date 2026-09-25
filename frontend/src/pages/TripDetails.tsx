@@ -17,7 +17,7 @@ function TripDetails() {
             setLoading(true);
             setError(null);
             try{
-            const response = await fetch(`http://localhost:5000/api/trips/${id}` );
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/trips/${id}` );
             if(!response.ok){
                 throw new Error('Failed to fetch trip');
             }

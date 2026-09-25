@@ -13,11 +13,11 @@ function Home() {
       <div className="relative z-10 max-w-3xl text-center">
         <p className="text-blue-300 font-semibold mb-4">AI-Powered Travel Planning</p>
 
-        <h1 className="text-5xl font-bold mb-4 text-white">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
           Plan your perfect trip with AI
         </h1>
 
-        <p className="text-lg text-gray-200 mb-8">
+        <p className="text-base md:text-lg text-gray-200 mb-8">
           Create personalized travel plans based on your
           destination, budget and interests.
         </p>
@@ -28,11 +28,11 @@ function Home() {
       </div>
     </section>
     <section className="py-20 px-6">
-        <div className="max-w-6xl mx-auto flex items-center gap-12">
-        <div className="w-1/2">
+       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+        <div className="w-full md:w-1/2">
         <img src={natureTrip} alt="mountain-landscape" className="rounded-lg shadow-lg" />
         </div>
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2">
         <p className="text-blue-600 font-semibold mb-3">
             personalized for you
         </p>
